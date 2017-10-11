@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="post" action="/form">
+        <div>
+            <label>Nama:</label>
+            <input type="text" name="nama" id="nama">
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" id="password">
+        </div>
+        <div>
+            <label>Jenis Kelamin:</label>
+            <span><input type="radio" name="kelamin" value="pria" checked>Pria
+                  <input type="radio" name="kelamin" value="wanita">Wanita
+            </span>
+        </div>
+        <div>
+            <label>Pendidikan:</label>
+            <select name="pendidikan">
+                <option value="sd">SD</option>
+                <option value="smp">SMP</option>
+                <option value="sma">SMA</option>
+                <option value="s1">S1</option>
+                <option value="s2">S2</option>
+                <option value="s3">S3</option>
+            </select>
+        </div>
+        <div>
+            <label>Hobi:</label>
+            <div>
+            <input type="checkbox" name="hobi" value="makan">Makan
+            </div>
+            <div>
+            <input type="checkbox" name="hobi" value="tidur">Tidur
+            </div>
+            <div>
+            <input type="checkbox" name="hobi" value="coding">Coding
+            </div>
+        </div>
+        <div>
+            <input type="submit">
+        </div>
+    </form>
+</body>
+</html>
