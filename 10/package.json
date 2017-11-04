@@ -1,0 +1,17 @@
+{
+  "name": "web216is2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^4.0.3",
+    "body-parser": "^1.18.1",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.15.4",
+    "express-session": "^1.15.6",
+    "express-sessions": "^1.0.6",
+    "multer": "^1.3.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}
