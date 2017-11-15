@@ -4,9 +4,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const db = database.createConnection({
-    host: '10.0.2.2',
+    host: 'localhost',
     user: 'root',
-    password: 'teachphp',
+    password: '',
     database: 'web2'
 });
 
