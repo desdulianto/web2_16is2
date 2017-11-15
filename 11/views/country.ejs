@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .success { color: green; }
+        .warning { color: orange; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <form method="post" action="/">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" />
+        </div>
+        <div>
+            <label>Capital:</label>
+            <input type="text" name="capital" />
+        </div>
+        <div><input type="submit" value="Tambah"></div>
+    </form>
+    <% if (flash.length > 0) { %>
+        <ul>
+            <% while (m = flash.pop()) { %>
+                <li class="<%= m.class %>"><%= m.message %></li>
+            <% } %>
+        </ul>
+    <% } %>
+    <form method="get" action="/saring">
+        <input type="text" name="saring"> <input type="submit" value="Filter">
+    </form>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Capital</td>
+            <td>Action</td>
+        </tr>
+        <% for (i in countries) { %>
+            <tr>
+            <td><%= countries[i].name %></td>
+            <td><%= countries[i].capital %></td>
+            <td><a href="/update/<%= countries[i].id %>">Edit</a>
+                <a href="/delete/<%= countries[i].id %>">Delete</a></td>
+            </tr>
+        <% } %>
+    </table>
+    <div>
+        <% if (pagination) { %>
+            <% if (pagination.page != 1 ) { %><a href="/?page=1">First</a><% } %>
+            <% if (pagination.prev_page) { %><a href="/?page=<%= pagination.prev_page %>">prev</a><% } %>
+            <% for (i = 1; i <= pagination.total_pages; i++) { %>
+                <% if (i != pagination.page) { %>
+                    <a href="/?page=<%= i %>"><%= i %></a>
+                <% } else { %>
+                    <span><%= i %></span>
+                <% } %>
+            <% } %>
+            <% if (pagination.next_page) { %><a href="/?page=<%= pagination.next_page %>">next</a><% } %>
+            <% if (pagination.page != pagination.total_pages ) { %><a href="/?page=<%= pagination.total_pages %>">Last</a><% } %>
+        <% } %>
+    </div>
+</body>
+</html>

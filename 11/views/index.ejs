@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To do list</title>
+</head>
+<body>
+    <h1>To do list</h1>
+
+    <form method="post" action="/">
+        <input type="text" name="todo"> <input type="submit" value="Add Todo">
+    </form>
+    <% if (session.flash.length > 0) { %>
+    <ul>
+        <% while(flash = session.flash.pop()) { %>
+            <li><%= flash.message %></li>
+        <% } %>
+    </ul>
+    <% } %>
+    <ul>
+    <% for (i in rows) { %>
+        <li><%= [rows[i].id, rows[i].todo, rows[i].done].join(', ') %>
+            <% if (! rows[i].done) { %>
+                <a href="/done/<%= rows[i].id %>">Done</a>
+            <% } else { %>
+                <a href="/done/<%= rows[i].id %>">Undone</a>
+            <% } %>
+            <a href="/hapus/<%= rows[i].id %>">Hapus</a></li>
+    <% } %>
+    </ul>
+</body>
+</html>
