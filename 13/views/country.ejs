@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="post" action="/">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label>Capital:</label>
+            <input type="text" name="capital">
+        </div>
+        <input type="submit" value="Add New">
+    </form>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Capital</th>
+            <th>Action</th>
+        </tr>
+        <% countries.forEach(country => { %>
+        <tr>
+            <td><%= country.name %></td>
+            <td><%= country.capital %></td>
+            <td><a href="/edit/<%= country._id %>">Edit</a>
+                <a href="/hapus/<%= country._id %>">Hapus</a></td>
+        </tr>
+        <% }) %>
+    </table> 
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="post" action="/edit/<%= country._id %>">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" value="<%= country.name %>">
+        </div>
+        <div>
+            <label>Capital:</label>
+            <input type="text" name="capital" value="<%= country.capital %>">
+        </div>
+        <input type="submit" value="Update">
+        <button type=button" onclick="location.href='/'">Batal</button>
+    </form>
+</body>
+</html>

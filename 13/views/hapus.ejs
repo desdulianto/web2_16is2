@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form method="post" action="/hapus/<%= country._id %>">
+        <div>
+            <label>Name:</label>
+            <span><%= country.name %>
+        </div>
+        <div>
+            <label>Capital:</label>
+            <%= country.capital %>
+        </div>
+        <input type="submit" value="Delete">
+        <button type="button" onclick="location.href='/'">Cancel</button>
+    </form>
+</body>
+</html>
