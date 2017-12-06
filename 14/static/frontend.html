@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <input type="text" name="country" id="country">
+    <input type="text" name="capital" id="capital">
+    <button type="button" onclick="addData()">Add Data</button>
+    <button type="button" onclick="showData()">Load Data</button>
+    <div id="output">
+    </div>
+    <script type="text/javascript">
+        function showData() {
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var output = document.getElementById('output');
+                    output.innerHTML = '';
+                    var data = JSON.parse(this.responseText);
+                    for (i in data) {
+                        p = document.createElement('p');
+                        p.innerHTML = data[i].name + ', ' + data[i].capital;
+                        button = document.createElement('button');
+                        button.type = "button"
+                        button.innerHTML = "Hapus"
+                        button.onclick = makeDeleteButton(data[i]._id);
+                        p.appendChild(button);
+                        output.appendChild(p);
+                    }
+                }
+            };
+
+            ajax.open('GET', 'http://localhost:3000/api/', true);
+            ajax.send();
+        }
+
+        function addData() {
+            var ajax = new XMLHttpRequest();
+
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 201)
+                    showData(); 
+            }
+
+            ajax.open('POST', 'http://localhost:3000/api/', true);
+            ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            ajax.send('name=' + document.getElementById('country').value + '&' +
+                      'capital=' + document.getElementById('capital').value);
+        }
+
+        function makeDeleteButton(id) {
+            return function() {
+                var ajax = new XMLHttpRequest();
+
+                ajax.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 204)
+                        showData();
+                }
+                
+                ajax.open('DELETE', 'http://localhost:3000/api/' + id, true);
+                ajax.send();
+            }
+        }
+    </script>
+</body>
+</html>
