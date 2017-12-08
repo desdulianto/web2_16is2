@@ -1,0 +1,153 @@
+1. Atribut form untuk menentukan endpoint URL yang menerima data yang disubmit
+   user adalah?
+    action
+
+2. Method HTTP request untuk mengupload file/berkas adalah?
+    POST
+    PUT
+
+3. Teknologi berikut yang berjalan pada sisi client adalah?
+    a. JS
+    b. HTML
+    d. CSS
+
+4. Bagaimana cara supaya script pada web server dapat mengenali sesi dari
+   masing-masing request?
+    session id (bisa dikirim melalui cookie, header, url)
+
+5. Tuliskan hal-hal yang perlu ditambahkan pada form HTML untuk mengupload
+   file ke server.
+    enctype=multipart/form-data
+    method=POST
+
+6. Sebutkan seluruh method yang valid pada request HTTP
+    GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE, CONNECT
+
+7. Sebutkan status code yang umum di kembalikan dari response HTTP dan arti
+   dari status code tersebut (min. 5)
+    200 - resource yg diminta berhasil dikembalikan sebagai response
+    304 - resource yang diminta belum mengalami perubahan (boleh dibaca dari cache)
+    404 - resource yang diminta tidak ditemukan
+    500 - masalah processing di sisi server
+    100 - client boleh melanjutkan pengiriman request
+
+8. Code javascript [].length != 1 menghasilkan nilai dengan type?
+    boolean
+
+Perhatikan potongan code javascript berikut:
+
+var nilai = [ { name: 'Budi', uts: 85, uas: 70, tugas: 80 },
+              { name: 'Rudi', uts: 60, uas: 50, tugas: 0  },
+              { name: 'Susi', uts: 90, uas: 80, tugas: 90 },
+              { name: 'Tuti', uts: 80, uas: 40, tugas: 70 } ];
+
+9. Tipe data dari variable nilai adalah?
+    array (of object)
+
+10. Tuliskan kode javascript untuk menambahkan data
+    { name: 'Andi', uts: 60, uas: 70, tugas: 30 }
+    ke variable nilai
+        nilai = [...nilai, { name: 'Andi', uts: 60, uas: 70, tugas: 30 }]
+        nilai.push({ name: 'Andi', uts: 60, uas: 70, tugas: 30 });   
+
+11. Tuliskan kode javascript untuk mendapatkan data nilai yang nilai tugas nya 0.
+    h = nilai.filter( function(x) { return x.tugas === 0; } );
+
+    h = [];
+    for (i = 0; i < nilai.length; i++) {
+        if (nilai[i].tugas === 0) h.push(nilai[i]);
+    }
+
+12. Tuliskan kode javascript untuk menghitung nilai akhir dari masing-masing
+    data nilai dengan rumus akhir = 0.4*tugas + 0.3*uts + 0.3*uas.
+    Output yang diinginkan:
+    [ { name: 'Budi', uts: 85, uas: 70, tugas: 80, akhir: 78.5 },
+      { name: 'Rudi', uts: 60, uas: 50, tugas: 0,  akhir: 33 },
+      { name: 'Susi', uts: 90, uas: 80, tugas: 90, akhir: 87 },
+      { name: 'Tuti', uts: 80, uas: 40, tugas: 70, akhir: 64 },
+      { name: 'Andi', uts: 60, uas: 70, tugas: 30, akhir: 51 } ]
+
+    h = [];
+    nilai.forEach( function(x) {
+        h.push({...x, akhir: 0.4*x.tugas + 0.3*x.uts + 0.3*x.uas});
+    });
+
+    h = nilai.map( function(x) { return {...x, akhir: 0.4*x.tugas+0.3*x.uts+0.3*x.uas } } );
+
+13. Saring data nilai untuk yang nilai akhirnya >= 60 (simpan ke variable lulus)
+    dan nilai akhir < 60 (simpan ke variable tidak_lulus)
+
+    lulus = h.filter(function(x) { return x.akhir >= 60; });
+    tidak_lulus = h.filter(function(x) { return x.akhir < 60; });
+
+    function partition(list, predicate) {
+        const yes = [], no = [];
+        list.forEach ( function(x) {
+            if (predicate(x))
+                yes.push(x);
+            else
+                no.push(x);
+        });
+        return [yes, no];
+    }
+
+    group = partition(h, function(x) { return h.akhir >= 60; });
+    lulus = group[0];
+    tidak_lulus = group[1];
+
+14. Tuliskan kode javascript untuk mendapatkan data nilai yang tertinggi.
+    Output yang diinginkan adalah:
+    { name: 'Susi', uts: 90, uas: 80, tugas: 90, akhir: 87 }
+    Tuliskan juga kode javascript untuk mendapatkan data nilai yang terendah.
+    Output yang diinginkan adalah:
+    { name: 'Rudi', uts: 60, uas: 50, tugas: 0, akhir: 33 }
+
+    tertinggi = h[0];
+    for (i = 1; i < h.length; i++) {
+        if (tertinggi.akhir < h[i].akhir)
+            tertinggi = h[i];
+    }
+
+    nilaiTertinggi = function(acc, cur) {
+        return acc.akhir < cur.akhir ? cur : acc;
+    }
+    nilaiTerendah = function(acc, cur) {
+        return acc.akhir > cur.akhir ? cur : acc;
+    }
+
+    h.reduce(nilaiTertinggi);
+    h.reduce(nilaiTerendah);
+
+15. Tuliskan template EJS untuk menghasilkan output berikut dari data nilai.
+    +-------+-------------+-------+-----+-----+-------+
+    | No.   | Name        | Tugas | UTS | UAS | Akhir |
+    +-------+-------------+-------+-----+-----+-------+
+    | 1.    | Budi        | 80    | 85  | 70  | 78.5  |
+    | 2.    | Rudi        | 0     | 60  | 50  | 33    |
+    | ...   | ...         | ...   | ... | ... | ...   |
+    +-------+-------------+-------+-----+-----+-------+
+
+    http.req('/', (req, res) => {
+        res.render('table', {items: nilai});
+    });
+
+    <table>
+        <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Tugas</th>
+            <th>UTS</th>
+            <th>UAS</th>
+            <th>Akhir</th>
+        </tr>
+    <% items.forEach( function(x, i) { %>
+        <tr>
+            <td><%= i+1 %></td>
+            <td><%= x.name %></td>
+            <td><%= x.tugas %></td>
+            <td><%= x.uas %></td>
+            <td><%= x.akhir %></td>
+        </tr>
+    <% }); %>
+    
+    </table>
